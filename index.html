@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de LDL - Fórmula de Friedewald</title>
+    <style>
+        body {
+            font-family: 'Sans-Serif', Arial, sans-serif;
+            text-transform: uppercase;
+        }
+        h2, h3 {
+            margin-top: 20px;
+        }
+        label, p {
+            margin: 10px 0;
+        }
+        input {
+            margin-top: 10px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4a4a4a; /* Cinza escuro discreto */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #383838; /* Cor levemente mais escura ao passar o mouse */
+            transform: translateY(-1px); /* Efeito suave de elevação */
+        }
+    </style>
+</head>
+<body>
+    <h2>Calculadora de LDL - Fórmula de Friedewald</h2>
+    <form id="ldlCalculator">
+        <label for="colesterolTotal">Colesterol Total (mg/dL):</label>
+        <input type="number" id="colesterolTotal" required>
+        <br>
+        <label for="hdl">HDL (mg/dL):</label>
+        <input type="number" id="hdl" required>
+        <br>
+        <label for="triglicerideos">Triglicerídeos (mg/dL):</label>
+        <input type="number" id="triglicerideos" required>
+        <br>
+        <button type="button" onclick="calcularLDL()">Calcular</button>
+    </form>
+
+    <p id="resultadoLDL"></p>
+
+    <script>
+        function calcularLDL() {
+            const colesterolTotal = parseFloat(document.getElementById('colesterolTotal').value);
+            const hdl = parseFloat(document.getElementById('hdl').value);
+            const triglicerideos = parseFloat(document.getElementById('triglicerideos').value);
+
+            // Calcula o LDL usando a fórmula de Friedewald
+            const ldl = colesterolTotal - hdl - (triglicerideos / 5);
+            let classificacao = "";
+
+            // Define a classificação com base nos valores de referência
+            if (ldl < 100) {
+                classificacao = "BAIXO";
+            } else if (ldl >= 100 && ldl <= 129) {
+                classificacao = "NORMAL";
+            } else {
+                classificacao = "ALTO";
+            }
+
+            // Mostra o resultado com a classificação
+            document.getElementById('resultadoLDL').innerHTML = `<strong>${ldl.toFixed(2)} mg/dL (${classificacao})</strong>`;
+        }
+    </script>
+</body>
+</html>
